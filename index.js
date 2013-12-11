@@ -16,6 +16,7 @@ function PluginsUI(game, opts) {
   this.folder = this.gui.addFolder('plugins');
 
   this.pluginState = {};
+  this.pluginItems = {};
 
   var list = this.plugins.listAll();
 
@@ -24,10 +25,24 @@ function PluginsUI(game, opts) {
 
     this.pluginState[name] = this.plugins.isEnabled(name);
 
-    this.folder.add(this.pluginState, name).onChange(setStateForPlugin(this, name));
+    this.pluginItems[name] = this.folder.add(this.pluginState, name);
+    this.pluginItems[name].onChange(setStateForPlugin(this, name));
   }
+
+  // update GUI when plugin is disabled by something else
+  var self = this;
+  this.plugins.on('plugin enabled', function(name) {
+    self.pluginState[name] = true;
+    self.pluginItems[name].updateDisplay();
+  });
+
+  this.plugins.on('plugin disabled', function(name) {
+    self.pluginState[name] = false;
+    self.pluginItems[name].updateDisplay();
+  });
 }
 
+// set new plugin state when user toggles it in GUI
 function setStateForPlugin(self, name) {
   return function(newState) {
     if (newState)
