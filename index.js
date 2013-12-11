@@ -24,14 +24,15 @@ function PluginsUI(game, opts) {
 
     this.pluginState[name] = this.plugins.isEnabled(name);
 
-    var self = this;
-
-    this.folder.add(this.pluginState, name).onChange(function(newState) {
-      if (newState)
-        self.plugins.enable(name);
-      else
-        self.plugins.disable(name);
-    });
+    this.folder.add(this.pluginState, name).onChange(setStateForPlugin(this, name));
   }
 }
 
+function setStateForPlugin(self, name) {
+  return function(newState) {
+    if (newState)
+      self.plugins.enable(name);
+    else
+      self.plugins.disable(name);
+  };
+}
