@@ -1,0 +1,13 @@
+{
+  "name": "voxel-plugins-ui",
+  "description": "user interface for voxel-plugins",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:deathcap/voxel-plugins-ui.git"
+  },
+  "dependencies": {
+    "voxel-plugins": "git://github.com/deathcap/voxel-plugins.git",
+    "dat-gui": "~0.5.0"
+  }
+}
