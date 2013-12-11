@@ -18,18 +18,18 @@ function PluginsUI(game, opts) {
   this.pluginState = {};
   this.pluginItems = {};
 
+  // add all existing plugins, already loaded
   var list = this.plugins.listAll();
-
   for (var i = 0; i < list.length; ++i) {
-    var name = list[i];
-
-    this.pluginState[name] = this.plugins.isEnabled(name);
-
-    this.pluginItems[name] = this.folder.add(this.pluginState, name);
-    this.pluginItems[name].onChange(setStateForPlugin(this, name));
+    this.addPlugin(list[i]);
   }
 
-  // update GUI when plugin is disabled by something else
+  // and listen for events for new plugins, which haven't loaded yet
+  this.plugins.on('new plugin', function(name) {
+    self.addPlugin(name);
+  });
+
+  // update GUI when plugin is enabled/disabled by something else
   var self = this;
   this.plugins.on('plugin enabled', function(name) {
     self.pluginState[name] = true;
@@ -41,6 +41,13 @@ function PluginsUI(game, opts) {
     self.pluginItems[name].updateDisplay();
   });
 }
+
+// add plugin checkbox widget
+PluginsUI.prototype.addPlugin = function (name) {
+  this.pluginState[name] = this.plugins.isEnabled(name);
+  this.pluginItems[name] = this.folder.add(this.pluginState, name);
+  this.pluginItems[name].onChange(setStateForPlugin(this, name));
+};
 
 // set new plugin state when user toggles it in GUI
 function setStateForPlugin(self, name) {
