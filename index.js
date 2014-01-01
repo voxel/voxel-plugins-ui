@@ -1,5 +1,5 @@
-// # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
-  
+'use strict';
+ 
 var datgui = require('dat-gui');
 
 module.exports = function(game, opts) {
