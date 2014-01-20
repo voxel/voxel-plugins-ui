@@ -1,5 +1,7 @@
 'use strict';
- 
+
+if (typeof window === 'undefined') return; // browser only
+
 var datgui = require('dat-gui');
 
 module.exports = function(game, opts) {
