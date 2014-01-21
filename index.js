@@ -1,15 +1,12 @@
 'use strict';
 
-if (typeof window === 'undefined') return; // browser only
-
-var datgui = require('dat-gui');
-
 module.exports = function(game, opts) {
   return new PluginsUI(game, opts);
 };
 
 module.exports.pluginInfo = {
-  loadAfter: ['voxel-debug']    // for appending to its gui, if available
+  loadAfter: ['voxel-debug'],    // for appending to its gui, if available
+  clientOnly: true
 };
 
 function PluginsUI(game, opts) {
@@ -18,7 +15,7 @@ function PluginsUI(game, opts) {
 
   opts = opts || {};
 
-  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new datgui.GUI());
+  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new require('dat-gui').GUI());
   this.folder = this.gui.addFolder('plugins');
 
   this.pluginState = {};
