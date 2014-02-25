@@ -14,8 +14,5 @@
   "dependencies": {
     "dat-gui": "~0.5.0"
   },
-  "peerDependencies": {
-    "voxel-plugins": ">=0.1.0"
-  },
   "license": "MIT"
 }
