@@ -2,6 +2,7 @@
   "name": "voxel-plugins-ui",
   "description": "user interface for voxel-plugins",
   "version": "0.2.0",
+  "main": "plugins-ui.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/voxel-plugins-ui.git"
