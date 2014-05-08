@@ -1,5 +1,7 @@
 'use strict';
 
+var createDatgui = require('dat-gui');
+
 module.exports = function(game, opts) {
   return new PluginsUI(game, opts);
 };
@@ -15,7 +17,7 @@ function PluginsUI(game, opts) {
 
   opts = opts || {};
 
-  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new require('dat-gui').GUI());
+  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new createDatgui.GUI());
   this.folder = this.gui.addFolder('plugins');
 
   this.pluginState = {};
