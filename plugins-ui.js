@@ -54,6 +54,7 @@ function PluginsUI(game, opts) {
 // add plugin checkbox widget
 PluginsUI.prototype.addPlugin = function (name) {
   this.pluginState[name] = this.plugins.isEnabled(name);
+  if (name in this.pluginItems) { return }
   this.pluginItems[name] = this.folder.add(this.pluginState, name);
   this.pluginItems[name].onChange(setStateForPlugin(this, name));
 };
