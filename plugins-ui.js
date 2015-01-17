@@ -19,8 +19,9 @@ function PluginsUI(game, opts) {
 
   // option to blur self after input, to relinquish keyboard focus to game
   this.autoBlur = opts.autoBlur || false
-
-  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new createDatgui.GUI());
+  
+  var guiOpts = opts.guiOpts || {}
+  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new createDatgui.GUI(guiOpts));
   this.folder = this.gui.addFolder('plugins');
 
   this.pluginState = {};
