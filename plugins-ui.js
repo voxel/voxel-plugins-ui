@@ -17,7 +17,11 @@ function PluginsUI(game, opts) {
 
   opts = opts || {};
 
-  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new createDatgui.GUI());
+  // option to blur self after input, to relinquish keyboard focus to game
+  this.autoBlur = opts.autoBlur || false
+  
+  var guiOpts = opts.guiOpts || {}
+  this.gui = opts.gui || (game.plugins && game.plugins.get('voxel-debug') ? game.plugins.get('voxel-debug').gui : new createDatgui.GUI(guiOpts));
   this.folder = this.gui.addFolder('plugins');
 
   this.pluginState = {};
@@ -50,6 +54,7 @@ function PluginsUI(game, opts) {
 // add plugin checkbox widget
 PluginsUI.prototype.addPlugin = function (name) {
   this.pluginState[name] = this.plugins.isEnabled(name);
+  if (name in this.pluginItems) { return }
   this.pluginItems[name] = this.folder.add(this.pluginState, name);
   this.pluginItems[name].onChange(setStateForPlugin(this, name));
 };
@@ -61,5 +66,13 @@ function setStateForPlugin(self, name) {
       self.plugins.enable(name);
     else
       self.plugins.disable(name);
+
+    // if autoBlur is set, and gui has keyboard focus, blur self
+    if (self.autoBlur && document){
+      if (self.gui.domElement.contains(document.activeElement)) {
+        document.activeElement.blur()
+      }
+    }
+
   };
 }
